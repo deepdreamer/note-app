@@ -1,0 +1,37 @@
+services:
+  php:
+    build:
+      context: ./docker/php
+    env_file:
+      - .env
+      - .env.local
+
+    volumes:
+      - .:/var/www/html  # Changed from ./symfony to ./app
+    depends_on:
+      - database
+
+  nginx:
+    build:
+      context: ./docker/nginx
+    volumes:
+      - .:/var/www/html  # Changed from ./symfony to ./app
+    ports:
+      - "8080:80"
+    depends_on:
+      - php
+
+  database:
+    image: mariadb:11.7
+    env_file:
+      - .env.local
+    volumes:
+      - ./database_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -p${MYSQL_ROOT_PASSWORD:-rootpassword} || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
