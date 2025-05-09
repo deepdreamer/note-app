@@ -1,0 +1,1 @@
+git config --local --add safe.directory /var/www/html
