@@ -4,12 +4,16 @@ Simple api for storing notes. Notes have name, content and priority.
 App was tested on linux:
 Ubuntu 22.04.5 LTS, Linux version 5.15.167.4-microsoft-standard-WSL2
 
+Docker is needed to run this project.
+
 Documentation is available on:
 http://localhost:8080/api/docs
 
 ### instalation steps:
-1. `make install-project`
-2. `make database-set-up`
+1. rename file `.evn.test.local.template` to `.env.test.local`
+2. rename file .`env.local.template` to `.env.local`
+3. run `make install-project`
+4. run `make database-set-up`
 
 ### other commands:
 `make start-project` -- just starts up the project
