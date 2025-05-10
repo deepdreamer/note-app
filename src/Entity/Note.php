@@ -20,6 +20,7 @@ use App\State\NotesByPriorityProvider;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: NoteRepository::class)]
 #[ApiResource(
@@ -133,7 +134,7 @@ class Note
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product:read'])]
+    #[Groups(['note:read'])]
     private ?int $id = null;
 
     public function __construct(string $title)
@@ -144,16 +145,20 @@ class Note
 
     #[ORM\Column(length: 255)]
     #[Groups(['note:read', 'note:write'])]
+    #[Assert\NotBlank]
     private string $title;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['note:read', 'note:write'])]
+    #[Assert\NotBlank]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     #[Groups(['note:read', 'note:write'])]
     #[ApiFilter(RangeFilter::class)]
-    private ?string $priority = null;
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 1, max: 65535)]
+    private int $priority;
 
     #[ORM\Column]
     #[Groups(['note:read'])]
@@ -188,12 +193,12 @@ class Note
         return $this;
     }
 
-    public function getPriority(): ?string
+    public function getPriority(): int
     {
         return $this->priority;
     }
 
-    public function setPriority(?string $priority): static
+    public function setPriority(int $priority): static
     {
         $this->priority = $priority;
 

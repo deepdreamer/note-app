@@ -13,16 +13,11 @@ done
 # Wait an additional few seconds for user setup to complete
 sleep 5
 
-# Verify the app user has proper access
-echo "Verifying database credentials..."
-if ! mysql -h database -u ${MARIADB_USER:-app} -p${MARIADB_PASSWORD:-app_password} -e "SELECT 1" &> /dev/null; then
-    echo "User credentials not working. Trying to create the user manually..."
-    mysql -h database -u root -p${MYSQL_ROOT_PASSWORD:-rootpassword} -e "CREATE USER IF NOT EXISTS '${MARIADB_USER:-app}'@'%' IDENTIFIED BY '${MARIADB_PASSWORD:-app_password}';"
-    mysql -h database -u root -p${MYSQL_ROOT_PASSWORD:-rootpassword} -e "GRANT ALL PRIVILEGES ON ${MARIADB_DB:-symfony_api}.* TO '${MARIADB_USER:-app}'@'%';"
-    mysql -h database -u root -p${MYSQL_ROOT_PASSWORD:-rootpassword} -e "FLUSH PRIVILEGES;"
-    echo "User created successfully."
-fi
-
+echo "Setting up credentials ..."
+mysql -h database -u root -p${MYSQL_ROOT_PASSWORD:-rootpassword} -e "CREATE USER IF NOT EXISTS '${MARIADB_USER:-app}'@'%' IDENTIFIED BY '${MARIADB_PASSWORD:-app_password}';"
+mysql -h database -u root -p${MYSQL_ROOT_PASSWORD:-rootpassword} -e "GRANT ALL PRIVILEGES ON ${MARIADB_DB:-symfony_api}.* TO '${MARIADB_USER:-app}'@'%';"
+mysql -h database -u root -p${MYSQL_ROOT_PASSWORD:-rootpassword} -e "GRANT ALL PRIVILEGES ON ${MARIADB_DB_TEST:-symfony_api_test}.* TO '${MARIADB_USER:-app}'@'%';"
+mysql -h database -u root -p${MYSQL_ROOT_PASSWORD:-rootpassword} -e "FLUSH PRIVILEGES;"
 echo "Database is ready!"
 
 if [ "${APP_ENV}" = "dev" ]; then

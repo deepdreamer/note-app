@@ -24,6 +24,7 @@ services:
   database:
     image: mariadb:11.7
     env_file:
+      - .env
       - .env.local
     volumes:
       - ./database_data:/var/lib/mysql
