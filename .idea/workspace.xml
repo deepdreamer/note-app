@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="579f6492-4912-4172-8bfc-ee3c94553382" name="Changes" comment="filtering add">
-      <change afterPath="$PROJECT_DIR$/src/DataFixtures/NoteFixtures.php" afterDir="false" />
+    <list default="true" id="579f6492-4912-4172-8bfc-ee3c94553382" name="Changes" comment="docs improvement">
+      <change afterPath="$PROJECT_DIR$/src/OpenApi/OpenApiFactory.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/api_platform.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/api_platform.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Note.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Note.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1746817342125</updated>
-      <workItem from="1746817344071" duration="17252000" />
+      <workItem from="1746817344071" duration="19320000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -139,7 +142,23 @@
       <option name="project" value="LOCAL" />
       <updated>1746834615502</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fixtures add">
+      <option name="closed" value="true" />
+      <created>1746835064607</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1746835064607</updated>
+    </task>
+    <task id="LOCAL-00009" summary="docs improvement">
+      <option name="closed" value="true" />
+      <created>1746836186036</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1746836186036</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,6 +183,8 @@
     <MESSAGE value="lint fix" />
     <MESSAGE value="wip" />
     <MESSAGE value="filtering add" />
-    <option name="LAST_COMMIT_MESSAGE" value="filtering add" />
+    <MESSAGE value="fixtures add" />
+    <MESSAGE value="docs improvement" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs improvement" />
   </component>
 </project>

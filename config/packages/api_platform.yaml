@@ -1,6 +1,12 @@
 api_platform:
-    title: Hello API Platform
-    version: 1.0.0
+    title: 'Notes API'
+    description: 'A RESTful API for managing notes with priority filtering'
+    version: '1.0.0'
+    formats:
+        jsonld:
+            mime_types: [ 'application/ld+json' ]
+        json:
+            mime_types: [ 'application/json' ]
     defaults:
         stateless: true
         cache_headers:

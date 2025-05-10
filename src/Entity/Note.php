@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
-use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\NoteRepository;
@@ -22,7 +24,50 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: NoteRepository::class)]
 #[ApiResource(
     operations: [
-        new GetCollection(),
+        new GetCollection(
+            openapi: new Operation(
+                summary: 'Get all notes',
+                description: 'Retrieves the collection of all notes, with optional filtering capabilities',
+                parameters: [
+                    new Parameter(
+                        name: 'priority[between]',
+                        in: 'query',
+                        description: 'Filter by priority range (e.g. 1..5)',
+                        required: false,
+                        schema: ['type' => 'string']
+                    ),
+                    new Parameter(
+                        name: 'priority[gt]',
+                        in: 'query',
+                        description: 'Filter notes with priority greater than value',
+                        required: false,
+                        schema: ['type' => 'integer']
+                    ),
+                    new Parameter(
+                        name: 'priority[gte]',
+                        in: 'query',
+                        description: 'Filter notes with priority greater than or equal to value',
+                        required: false,
+                        schema: ['type' => 'integer']
+                    ),
+                    new Parameter(
+                        name: 'priority[lt]',
+                        in: 'query',
+                        description: 'Filter notes with priority less than value',
+                        required: false,
+                        schema: ['type' => 'integer']
+                    ),
+                    new Parameter(
+                        name: 'priority[lte]',
+                        in: 'query',
+                        description: 'Filter notes with priority less than or equal to value',
+                        required: false,
+                        schema: ['type' => 'integer']
+                    )
+                ]
+            ),
+            description: 'Retrieves the collection of Note resources'
+        ),
         new GetCollection(
             uriTemplate: '/notes/priority/{priority}',
             uriVariables: [
@@ -41,7 +86,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
                         description: 'Priority level (1-65535)',
                         required: true,
                         schema: [
-                            'type' => 'smallint',
+                            'type' => 'integer',
                             'minimum' => 1,
                             'maximum' => 65535
                         ]
@@ -51,9 +96,34 @@ use Symfony\Component\Serializer\Annotation\Groups;
             name: 'get_notes_by_priority',
             provider: NotesByPriorityProvider::class
         ),
-        new Post(),
-        new Put(),
-        new Get(),
+        new Post(
+            openapi: new Operation(
+                summary: 'Create a new note',
+                description: 'Creates a new note with the provided data'
+            ),
+            description: 'Creates a Note resource'
+        ),
+        new Put(
+            openapi: new Operation(
+                summary: 'Replace a note',
+                description: 'Fully updates an existing note'
+            ),
+            description: 'Replaces the Note resource'
+        ),
+        new Patch(
+            openapi: new Operation(
+                summary: 'Update a note partially',
+                description: 'Partially updates an existing note with the provided data'
+            ),
+            description: 'Updates the Note resource'
+        ),
+        new Get(
+            openapi: new Operation(
+                summary: 'Get a single note',
+                description: 'Retrieves a specific note by ID'
+            ),
+            description: 'Retrieves a Note resource'
+        ),
     ],
     normalizationContext: ['groups' => ['note:read']],
     denormalizationContext: ['groups' => ['note:write']]
