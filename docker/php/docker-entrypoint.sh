@@ -43,8 +43,14 @@ composer install
 if [ -f bin/console ]; then
     echo "Running database migrations..."
     bin/console doctrine:migrations:migrate --no-interaction || true
+    table_count=$(mysql -h database -u root -p"${MYSQL_ROOT_PASSWORD:-!ChangeMe!}" -e "SELECT COUNT(*) FROM ${MARIADB_DB:-symfony_api}.note" --skip-column-names)
+    if [ "$table_count" -eq 0 ]; then
+      bin/console doctrine:fixtures:load -n
+    fi
 fi
 
 git config --global --add safe.directory /var/www/html
+
+
 
 exec "$@"
