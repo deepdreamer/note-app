@@ -45,4 +45,6 @@ if [ -f bin/console ]; then
     bin/console doctrine:migrations:migrate --no-interaction || true
 fi
 
+git config --global --add safe.directory /var/www/html
+
 exec "$@"

@@ -1,23 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factory;
 
 use App\Entity\Note;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
-/**
- * @extends PersistentProxyObjectFactory<Note>
- */
+/** @extends \Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory<\App\Entity\Note> */
 final class NoteFactory extends PersistentProxyObjectFactory
 {
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
-     */
-    public function __construct()
-    {
-    }
 
     public static function class(): string
     {
@@ -26,26 +18,22 @@ final class NoteFactory extends PersistentProxyObjectFactory
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     *
-     * @todo add your default values here
+     * @return array<string, mixed>
      */
-    protected function defaults(): array|callable
+    protected function defaults(): array
     {
         return [
-            'created' => self::faker()->dateTime(),
-            'title' => self::faker()->sentence(3),
-            'priority' => 1,
             'content' => self::faker()->text(255),
+            'created' => self::faker()->dateTime(),
+            'priority' => 1,
+            'title' => self::faker()->sentence(3),
         ];
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-     */
+    /** @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization */
     protected function initialize(): static
     {
-        return $this
-            // ->afterInstantiate(function(Note $note): void {})
-        ;
+        return $this;
     }
+
 }

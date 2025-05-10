@@ -1,32 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+<?xml version="1.0"?>
+<ruleset name="Symfony Custom Standard">
+    <description>Custom coding standard for Symfony 6.4 projects</description>
 
-    <arg name="basepath" value="."/>
-    <arg name="cache" value=".phpcs-cache"/>
-    <arg name="colors"/>
-    <arg name="extensions" value="php"/>
+    <config name="installed_paths" value="vendor/slevomat/coding-standard"/>
 
-    <!-- Directories to be checked -->
-    <file>src/</file>
-    <file>tests/</file>
+    <file>.</file>
 
-    <!-- Use PSR-12 coding standard -->
     <rule ref="PSR12"/>
-
-    <!-- Exclusions -->
-    <exclude-pattern>*/var/*</exclude-pattern>
-    <exclude-pattern>*/vendor/*</exclude-pattern>
-    <exclude-pattern>*/node_modules/*</exclude-pattern>
-
-    <!-- Add Symfony-specific rules -->
-    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
-    <rule ref="Generic.Formatting.SpaceAfterNot"/>
-    <rule ref="Squiz.Strings.ConcatenationSpacing">
+    <rule ref="SlevomatCodingStandard.Variables.UnusedVariable"/>
+    <rule ref="SlevomatCodingStandard.Variables.UselessVariable"/>
+    <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
+    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+    <rule ref="SlevomatCodingStandard.Classes.ClassStructure"/>
+    <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
+    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEmpty"/>
+    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
+    <rule ref="SlevomatCodingStandard.Functions.UnusedInheritedVariablePassedToClosure"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
         <properties>
-            <property name="spacing" value="0"/>
-            <property name="ignoreNewlines" value="true"/>
+            <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
     </rule>
 
+    <!-- Disable rule if needed -->
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Exclude common Symfony directories -->
+    <exclude-pattern>var/*</exclude-pattern>
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>node_modules/*</exclude-pattern>
+    <exclude-pattern>bin/*</exclude-pattern>
+    <exclude-pattern>public/*</exclude-pattern>
 </ruleset>

@@ -13,9 +13,9 @@ use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use App\Repository\NoteRepository;
 use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
+use App\Repository\NoteRepository;
 use App\State\NotesByPriorityProvider;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -64,7 +64,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                         description: 'Filter notes with priority less than or equal to value',
                         required: false,
                         schema: ['type' => 'integer']
-                    )
+                    ),
                 ]
             ),
             description: 'Retrieves the collection of Note resources'
@@ -75,7 +75,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                 'priority' => new Link(
                     fromProperty: 'priority',
                     fromClass: Note::class
-                )
+                ),
             ],
             openapi: new Operation(
                 summary: 'Get notes by specific priority',
@@ -89,9 +89,9 @@ use Symfony\Component\Validator\Constraints as Assert;
                         schema: [
                             'type' => 'integer',
                             'minimum' => 1,
-                            'maximum' => 65535
+                            'maximum' => 65535,
                         ]
-                    )
+                    ),
                 ]
             ),
             name: 'get_notes_by_priority',
@@ -131,17 +131,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 class Note
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['note:read'])]
     private ?int $id = null;
-
-    public function __construct(string $title)
-    {
-        $this->title = $title;
-        $this->created = new \DateTime();
-    }
 
     #[ORM\Column(length: 255)]
     #[Groups(['note:read', 'note:write'])]
@@ -153,7 +148,7 @@ class Note
     #[Assert\NotBlank]
     private ?string $content = null;
 
-    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[ORM\Column(type: Types::SMALLINT, nullable: false)]
     #[Groups(['note:read', 'note:write'])]
     #[ApiFilter(RangeFilter::class)]
     #[Assert\NotBlank]
@@ -163,6 +158,12 @@ class Note
     #[ORM\Column]
     #[Groups(['note:read'])]
     private \DateTime $created;
+
+    public function __construct(string $title)
+    {
+        $this->title = $title;
+        $this->created = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -216,4 +217,5 @@ class Note
 
         return $this;
     }
+
 }

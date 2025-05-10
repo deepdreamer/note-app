@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\OpenApi;
 
 use ApiPlatform\OpenApi\Factory\OpenApiFactoryInterface;
-use ApiPlatform\OpenApi\OpenApi;
 use ApiPlatform\OpenApi\Model;
+use ApiPlatform\OpenApi\OpenApi;
 
 final class OpenApiFactory implements OpenApiFactoryInterface
 {
@@ -16,6 +18,9 @@ final class OpenApiFactory implements OpenApiFactoryInterface
         $this->decorated = $decorated;
     }
 
+    /**
+     * @param array<mixed> $context
+     */
     public function __invoke(array $context = []): OpenApi
     {
         $openApi = $this->decorated->__invoke($context);
@@ -25,7 +30,8 @@ final class OpenApiFactory implements OpenApiFactoryInterface
             new Model\Server(
                 url: 'http://localhost:8080',
                 description: 'Local development server'
-            )
+            ),
         ]);
     }
+
 }

@@ -34,6 +34,7 @@
     },
     "config": {
         "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true,
             "symfony/flex": true,
@@ -73,9 +74,8 @@
         ],
         "phpstan": "phpstan analyse -c phpstan.neon",
         "phpstan-tests": "phpstan analyse -c phpstan-tests.neon tests",
-        "phpcs": "phpcs",
-        "phpcbf": "phpcbf",
-        "cs-fix": "phpcbf"
+        "phpcs": "vendor/bin/phpcs --standard=phpcs.xml  ./src ./tests",
+        "phpcbf": "vendor/bin/phpcbf --standard=phpcs.xml ./src ./tests"
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -96,7 +96,8 @@
         "phpstan/phpstan-doctrine": "^2.0",
         "phpstan/phpstan-symfony": "^2.0",
         "phpunit/phpunit": "^9.5",
-        "squizlabs/php_codesniffer": "^3.12",
+        "slevomat/coding-standard": "^8.18",
+        "squizlabs/php_codesniffer": "3.*",
         "symfony/browser-kit": "6.4.*",
         "symfony/css-selector": "6.4.*",
         "symfony/http-client": "6.4.*",

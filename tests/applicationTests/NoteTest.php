@@ -1,22 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace applicationTests;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\Entity\Note;
 use App\Factory\NoteFactory;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
 class NoteTest extends ApiTestCase
 {
-    use ResetDatabase, Factories;
+
+    use ResetDatabase;
+    use Factories;
 
     private Client $client;
 
@@ -35,8 +34,9 @@ class NoteTest extends ApiTestCase
         $doctrine = $container->get('doctrine');
         $connection = $doctrine->getConnection();
         $params = $connection->getParams();
+        $environment = $container->getParameter('kernel.environment');
 
-        echo "\n\nUsing database: {$params['dbname']} with environment: " . $_SERVER['APP_ENV'] . "\n\n";
+        echo "\n\nUsing database: {$params['dbname']} with environment: " . $environment . "\n\n";
 
         $this->assertTrue($params['dbname'] === 'symfony_api_test');
     }
@@ -48,7 +48,7 @@ class NoteTest extends ApiTestCase
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      */
-    public function testGetCollection()
+    public function testGetCollection(): void
     {
         NoteFactory::createMany(5, [ 'priority' => 1 ]);
         NoteFactory::createMany(5, [ 'priority' => 2 ]);
@@ -187,7 +187,7 @@ class NoteTest extends ApiTestCase
             ],
             'headers' => [
                 'Content-Type' => 'application/merge-patch+json',
-            ]
+            ],
         ]);
 
         $this->assertResponseIsSuccessful();
@@ -196,4 +196,5 @@ class NoteTest extends ApiTestCase
             'title' => 'updated title',
         ]);
     }
+
 }

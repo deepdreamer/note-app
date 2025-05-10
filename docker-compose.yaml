@@ -7,7 +7,7 @@ services:
       - .env.local
 
     volumes:
-      - .:/var/www/html  # Changed from ./symfony to ./app
+      - '.:/var/www/html'
     depends_on:
       - database
 
@@ -15,7 +15,7 @@ services:
     build:
       context: ./docker/nginx
     volumes:
-      - .:/var/www/html  # Changed from ./symfony to ./app
+      - '.:/var/www/html'
     ports:
       - "8080:80"
     depends_on:
@@ -27,7 +27,7 @@ services:
       - .env
       - .env.local
     volumes:
-      - ./database_data:/var/lib/mysql
+      - './database_data:/var/lib/mysql'
     ports:
       - "3306:3306"
     healthcheck:
