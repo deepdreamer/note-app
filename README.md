@@ -45,6 +45,21 @@ curl -X GET \
   'http://localhost:8080/api/notes/{id}' \
   -H 'Accept: application/json'
 ```
+
+get notes between specific priorities:
+```
+curl -X 'GET' \
+  'http://localhost:8080/api/notes?priority%5Bbetween%5D=2-3&page=1' \
+  -H 'accept: application/ld+json'
+```
+
+get notes of specific priorities:
+```
+curl -X 'GET' \
+  'http://localhost:8080/api/notes/priority/5?page=1' \
+  -H 'accept: application/ld+json'
+```
+
 update note:
 ```
 curl -X PATCH \
