@@ -12,7 +12,11 @@ final class DefaultNoteStory extends Story
 
     public function build(): void
     {
-        NoteFactory::createMany(100);
+        NoteFactory::createMany(10, ['priority' => 1]);;
+        NoteFactory::createMany(10, ['priority' => 2]);;
+        NoteFactory::createMany(10, ['priority' => 3]);;
+        NoteFactory::createMany(10, ['priority' => 4]);;
+        NoteFactory::createMany(10, ['priority' => 5]);;
     }
 
 }
