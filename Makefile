@@ -1,5 +1,5 @@
 database-set-up:
-	docker-compose exec php php bin/console doctrine:migrations:migrate && php bin/console doctrine:fixtures:load
+	docker-compose exec php php bin/console doctrine:migrations:migrate && docker-compose exec php php bin/console doctrine:fixtures:load
 
 install-project:
 	docker-compose build && docker-compose up -d
